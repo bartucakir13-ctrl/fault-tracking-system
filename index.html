@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arıza Takip Sistemi</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A7%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">🔧</div>
+            <div>
+                <h1>Teknik Servis</h1>
+                <p class="tagline">Arıza Takip ve Onarım Paneli</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <span id="kullaniciSelam" class="kullanici-selam"></span>
+            <button class="btn-cikis" onclick="cikisYap()">Çıkış Yap</button>
+        </div>
+    </header>
+
+    <div class="stat-strip">
+        <div class="stat-card">
+            <span class="stat-icon">📋</span>
+            <span class="stat-value" id="statToplam">0</span>
+            <span class="stat-label">Toplam Kayıt</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">⏳</span>
+            <span class="stat-value" id="statBekleyen">0</span>
+            <span class="stat-label">Atölyede</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">✅</span>
+            <span class="stat-value" id="statTeslim">0</span>
+            <span class="stat-label">Teslim Edilen</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📅</span>
+            <span class="stat-value" id="statBugun">0</span>
+            <span class="stat-label">Bugün Gelen</span>
+        </div>
+    </div>
+
+    <div class="anadiv">
+        <div class="kayit">
+            <h2 style="color:rgb(13, 30, 84);">📝 Yeni Cihaz Kayıt</h2>
+            <form id="arizaform">
+                <div class="inputlar">
+                    <label>👤 Müşteri Ad-Soyad</label>
+                    <input type="text" id="musteriad" required placeholder="Örn:Hande Bodur">
+                </div>
+                <div class="inputlar">
+                    <label>📞 Telefon Numarası</label>
+                    <input type="text" id="musteritel" required placeholder="05XX XXX XX XX">
+                </div>
+                <div class="inputlar">
+                    <label>💻 Cihaz/Model</label>
+                    <input type="text" id="cihazmdl" required placeholder="MSP430G2353">
+                </div>
+                <div class="inputlar">
+                    <label>🔢 Seri Numarası</label>
+                    <input type="text" id="serino" required placeholder="S/N: 123456789">
+                </div>
+                <div class="inputlar">
+                    <label>📝 Arıza Şikayeti</label>
+                    <textarea id="sikayet" required placeholder="MSP430G2353 bağlantı hatası"></textarea>
+                </div>
+                <button type="submit" class="btn">💾 Sisteme Kaydet</button>
+            </form>
+        </div>
+
+        <div class="sag-sutun">
+            <div class="bklynpanel">
+                <div class="panel">
+                    <h2 style="color: #f1c40f;"><span class="led led-amber"></span> Atölyede Bekleyen İşler <span class="panel-count" id="bekleyenSayac">(0)</span></h2>
+                    <input type="text" id="aramaKutusu" class="arama-kutusu" placeholder="🔍 İsim, cihaz veya seri no ara...">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Müşteri</th>
+                                <th>Cihaz</th>
+                                <th>Seri No</th>
+                                <th>Geliş Tarihi</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aktifTablo"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tslmpanel">
+                <div class="panel">
+                    <h2 style="color: #2ecc71;"><span class="led led-green"></span> Teslim Edilenler (Arşiv) <span class="panel-count" id="teslimSayac">(0)</span></h2>
+                    <button class="btn-disaaktar" onclick="csvDisaAktar()">📤 CSV Olarak İndir</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Müşteri</th>
+                                <th>Cihaz</th>
+                                <th>Geliş Tarihi</th>
+                                <th>Gidiş Tarihi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="arsivTablo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="toastKutu" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sisteme Giriş - Teknik Servis</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A7%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-sayfa">
+
+    <div class="login-kart" id="loginKart">
+        <div class="login-logo">🔧</div>
+        <h2>Atölye Girişi</h2>
+        <p class="login-alt">Teknik Servis paneline hoş geldiniz</p>
+
+        <div id="hataMesaji" class="hata-mesaji" style="display:none;"></div>
+
+        <div class="login-input-grup">
+            <span class="login-input-ikon">👤</span>
+            <input type="text" id="kullaniciAdi" placeholder="Kullanıcı Adı" autocomplete="off">
+        </div>
+        <div class="login-input-grup">
+            <span class="login-input-ikon">🔒</span>
+            <input type="password" id="sifre" placeholder="Şifre">
+        </div>
+
+        <button class="btn" onclick="girisYap()">Sisteme Gir</button>
+    </div>
+
+    <script>
+        function girisYap() {
+            var kAdi = document.getElementById("kullaniciAdi").value.trim();
+            var sifre = document.getElementById("sifre").value;
+            var hataKutusu = document.getElementById("hataMesaji");
+            var kart = document.getElementById("loginKart");
+
+            if (kAdi === "Bartu" && sifre === "12345") {
+                sessionStorage.setItem("oturumAcildi", "evet");
+                sessionStorage.setItem("kullaniciAdi", kAdi);
+                window.location.href = "index.html";
+            } else {
+                hataKutusu.textContent = "Kullanıcı adı veya şifre hatalı.";
+                hataKutusu.style.display = "block";
+
+                kart.classList.remove("sallan");
+                void kart.offsetWidth; // animasyonu yeniden başlatmak için
+                kart.classList.add("sallan");
+
+                document.getElementById("sifre").value = "";
+                document.getElementById("sifre").focus();
+            }
+        }
+
+        document.getElementById("kullaniciAdi").addEventListener("keyup", function (olay) {
+            if (olay.key === "Enter") girisYap();
+        });
+        document.getElementById("sifre").addEventListener("keyup", function (olay) {
+            if (olay.key === "Enter") girisYap();
+        });
+    </script>
+
+</body>
+</html>
